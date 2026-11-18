@@ -1,4 +1,4 @@
-package com.example.pas_fluttah
+package com.example.application_project
 
 import io.flutter.embedding.android.FlutterActivity
 
