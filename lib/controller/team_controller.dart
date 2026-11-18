@@ -1,12 +1,13 @@
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:pas_fluttah/model/team_model.dart';
 
 class TeamController extends GetxController {
   var isLoading = false.obs;
 
-  var productModel = Rxn<ProductModel2>();
+  var teamModel = Rxn<PremierLeagueModel>();
 
-  final RxList<Product> listProduct = <Product>[].obs;
+  final RxList<PremierLeagueModel> listProduct = <PremierLeagueModel>[].obs;
 
   @override
   void onInit() {
@@ -20,16 +21,16 @@ class TeamController extends GetxController {
       isLoading.value = true;
 
       final url = Uri.parse(
-        "https://dummyjson.com/products?limit=10",
+        "https://www.thesportsdb.com/api/v1/json/123/search_all_teams.php? l=English%20Premier%20League",
       );
 
       final response = await http.get(url);
 
       if (response.statusCode == 200) {
-        productModel.value = productModel2FromJson(response.body);
+        teamModel.value = premierLeagueModelFromJson(response.body);
 
         listProduct.assignAll(
-          productModel.value!.products,
+          teamModel.value!.teams,
         );
       } else {
         Get.snackbar("Gagal", "Failed to connect to API!");
